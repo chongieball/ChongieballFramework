@@ -10,7 +10,6 @@ class HomeController extends BaseController
 
 	public function index(Request $request, Response $response)
 	{
-		$this->flash->addMessage('info', 'Testing Flash Message');
 		return $this->view->render($response, 'home.twig');
 	}
 }

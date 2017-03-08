@@ -1,5 +1,6 @@
 {% extends 'templates/app.twig' %}
 
+{% block title %} Data Users {% endblock %}
 {% block content %}
 	<table class="table table-striped">
 			<tr>
@@ -9,7 +10,7 @@
 			</tr>
 		{% for data in show %}
 			<tr> 
-				<td><a href="./{{ data.username }}">{{ data.username }}</td>
+				<td><a href="{{ data.username }}">{{ data.username }}</td>
 				<td>{{ data.name}}</td>
 				<td>{{ data.email}}</td>
 			</tr>

@@ -6,19 +6,16 @@ class User extends BaseModel
 {
 	protected $table = 'user';
 
-	public function login($username, $password)
+	public function add(array $data)
 	{
-		$find = $this->find('username', $username);
+		$data = [
+			'username'	=> $data['username'],
+			'name'		=> $data['name'],
+			'email'		=> $data['email'],
+			'password'	=> password_hash($data['password'], PASSWORD_DEFAULT),
+			];
 
-		if (!empty($find)) {
-			if (password_verify($password, $find['password'])) {
-				return true;
-			} else {
-				return 'password salah';
-			}
-		} else {
-			return 'username salah';
-		}
+		$this->create($data);
 	}
 
 }

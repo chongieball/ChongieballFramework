@@ -37,4 +37,20 @@ abstract class BaseModel
 
 		return $result->fetch();
 	}
+
+	public function create(array $data)
+	{
+		$column = [];
+		$paramData = [];
+
+		foreach ($data as $key => $value) {
+			$column[$key] = ':'.$key;
+			$paramData[$key] = $value;
+		}
+		$this->db->insert($this->table)
+				->values($column)
+				->setParameters($paramData)
+				->execute();
+	}
+
 }

@@ -24,6 +24,12 @@ $container['view'] = function (Container $container) use ($setting) {
 	$view->addExtension(new ViewExt($container->router, $container->request->getUri()));
 
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
+
+	$view->getEnvironment()->addGlobal('old', $_SESSION['old']);
+	unset($_SESSION['old']);
+
+	$view->getEnvironment()->addGlobal('errors', $_SESSION['errors']);
+	unset($_SESSION['errors']);
 	
 	return $view;
 };

@@ -35,4 +35,44 @@ class UserController extends BaseController
 		}
 		
 	}
+
+	public function getSignUp(Request $request, Response $response)
+	{
+		return $this->view->render($response, 'user/signup.twig');
+	}
+
+	public function postSignUp(Request $request, Response $response)
+	{
+		
+		$this->validator->rule('required', ['username', 'name', 'email', 'password'])->message('{field} Must Not Empty');
+		$this->validator->rule('email', ['email'])->message('Invalid Email Address');
+
+		//setting label
+		$this->validator->labels([
+			'username'	=> 'Username',
+			'name'		=> 'Name',
+			'email'		=> 'Email',
+			'password'	=> 'Password',
+			]);
+
+		//validate 
+		if ($this->validator->validate()) {
+			$user = new \Chongieball\Models\User($this->db);
+
+			$user->add($request->getParams());
+
+			$this->flash->addMessage('success', 'Sign Up Success');
+
+		} else {
+			$_SESSION['errors'] = $this->validator->errors();
+
+			//when get error return old input
+			$_SESSION['old'] = $request->getParams();
+
+			return $response->withRedirect($this->router->pathFor('user.signup'));
+
+		}
+		
+		return $response->withRedirect($this->router->pathFor('user.index'));
+	}
 }
